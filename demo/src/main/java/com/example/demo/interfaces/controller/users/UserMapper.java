@@ -10,7 +10,7 @@ public class UserMapper {
     }
 
     public static UserCommand.SignUp toSignUp(UserDto.SignUpRequest request) {
-        return new UserCommand.SignUp(request.email(), request.username(), request.password());
+        return new UserCommand.SignUp(request.email(), request.username(), request.password(), request.nickname());
 
     }
 
