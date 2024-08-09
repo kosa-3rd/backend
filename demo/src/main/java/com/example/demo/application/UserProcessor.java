@@ -17,7 +17,7 @@ public class UserProcessor {
 
     public SignUpInfo signup(UserCommand.SignUp command) {
         userService.validateUser(command.email());
-        User user = userService.saveUser(new User(command.email(), command.username(), command.password(), command.nickname()));
+        User user = userService.saveUser(new User(command.email(), command.username(), command.password()));
         return new SignUpInfo(user.getUsername(), tokenManager.generateToken(user.getUsername()));
     }
     public UserInfo login(UserCommand.Login command) {
@@ -37,6 +37,10 @@ public class UserProcessor {
         user.setUsername(modify.username());
         user.setPassword(modify.password());
         return userService.saveUser(user);
+    }
+
+    public Boolean validateUser(String userEmail) {
+        return userService.validateCheck(userEmail);
     }
 
     public record SignUpInfo(String email, String token) {
