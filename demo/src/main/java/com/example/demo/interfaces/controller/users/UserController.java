@@ -22,6 +22,16 @@ public class UserController {
                 );
     }
 
+    @PostMapping("/validate")
+    public Boolean duplicationCheck(@RequestBody String userEmail){
+        if(userEmail.isBlank() || userEmail.isEmpty()){
+            return false;
+        }
+        System.out.println(userEmail);
+        return userProcessor.validateUser(userEmail);
+
+    }
+
     @PostMapping("/login")
     public UserDto.LoginResponse login(@RequestBody UserDto.LoginRequest request) {
         request.validate();
@@ -31,6 +41,7 @@ public class UserController {
                 )
         );
     }
+
     @PatchMapping
     public UserDto.ModifyResponse modifyUser(@RequestHeader("Authorization") String token,
             @RequestBody UserDto.ModifyRequest request) {

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class UserService {
@@ -31,12 +32,19 @@ public class UserService {
         );
     }
 
+    @Transactional
     public void validateUser(String email) {
         userRepository.getUserByEmail(email).ifPresent(
                 user -> {
                     throw new RuntimeException("이미 가입된 사용자입니다.");
                 }
         );
+    }
+    
+    @Transactional
+    public boolean validateCheck(String email){
+        Optional<User> user =userRepository.getUserByEmail(email);
+        return user.isEmpty();
     }
 
     @Transactional

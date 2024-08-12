@@ -1,5 +1,6 @@
 package com.example.demo.domain.posts;
 
+import com.example.demo.domain.users.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -16,6 +17,10 @@ public class Post {
 
     @Getter
     private String content;
+
+    @Getter
+    @ManyToOne
+    private User user;
 
     public Post(){}
 

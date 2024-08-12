@@ -1,7 +1,14 @@
 package com.example.demo.interfaces.controller.users;
 
 public class UserDto {
-    public record SignUpRequest(String email,String username ,String password) {
+
+    public record DuplicatedEmailCheckRequest(String email) {
+        public void validate() {
+
+        }
+    }
+
+    public record SignUpRequest(String email,String username ,String password, String nickname) {
         public void validate() {
             if (email == null || email.isBlank()) {
                 throw new IllegalArgumentException("email is blank");
@@ -11,6 +18,9 @@ public class UserDto {
             }
             if (password == null || password.isBlank()) {
                 throw new IllegalArgumentException("password is blank");
+            }
+            if (nickname == null || nickname.isBlank()) {
+                throw new IllegalArgumentException("nickname is blank");
             }
         }
     }

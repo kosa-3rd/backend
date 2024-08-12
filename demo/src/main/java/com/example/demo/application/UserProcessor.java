@@ -39,6 +39,10 @@ public class UserProcessor {
         return userService.saveUser(user);
     }
 
+    public Boolean validateUser(String userEmail) {
+        return userService.validateCheck(userEmail);
+    }
+
     public record SignUpInfo(String email, String token) {
     }
     public record UserInfo(String email, String token) {
