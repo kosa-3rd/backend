@@ -13,10 +13,8 @@ import java.util.List;
 @RequestMapping("/api/station")
 @RestController
 public class StationController {
+    @Autowired
     private StationService stationService;
-
-
-
 
     @GetMapping("/list")
     public ResponseEntity<List<StationInfoDTO>> getStationsBySubwayId(@RequestParam long subwayId) {

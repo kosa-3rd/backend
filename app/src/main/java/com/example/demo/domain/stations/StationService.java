@@ -13,9 +13,6 @@ public class StationService {
     @Autowired
     private StationRepository stationRepository;
 
-    @Value("${STATION_KEY}")
-    private String stationKey;
-
 
     private final RestTemplate restTemplate = new RestTemplate();
 
@@ -24,8 +21,8 @@ public class StationService {
     }
 
     public String getData(String stationName){
-        String uri = "http://swopenapi.seoul.go.kr/api/subway/{key}/json/realtimeStationArrival/1/6/";
-        return restTemplate.getForObject(uri, String.class, stationKey);
+        String uri = "http://swopenapi.seoul.go.kr/api/subway/715070786e726a7335327259436b49/json/realtimeStationArrival/1/6/";
+        return restTemplate.getForObject(uri, String.class);
     }
 
 
