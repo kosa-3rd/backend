@@ -56,6 +56,7 @@ public class UserController {
     @DeleteMapping
     public UserDto.DeleteResponse deleteUser(@RequestHeader("Authorization") String token,
             @RequestBody UserDto.DeleteRequest request) {
+        System.out.println("email " + request.email());
         request.validate();
         return UserMapper.toDeleteResponse(
                 userProcessor.deleteUser(

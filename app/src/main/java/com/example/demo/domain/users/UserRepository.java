@@ -10,6 +10,7 @@ public interface UserRepository {
 
     Optional<User> getUserByEmail(String email);
 
+
     Optional<User> saveUser(User user);
 
     Optional<User> getUserByEmailAndPassword(String username,String password);
@@ -17,4 +18,6 @@ public interface UserRepository {
     void deleteUser(User user);
 
     List<Post> getAllPosts();
+
+    List<User>  getAll();
 }

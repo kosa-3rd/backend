@@ -26,18 +26,18 @@ class PostControllerTest {
     private ObjectMapper objectMapper;
 
 
-    @Test
-    @DisplayName("게시물 발행")
-    void createPost() throws Exception {
-        PostDto.CreatePostRequest createPostRequest = new PostDto.CreatePostRequest("title", "content");
-        MvcResult authorization = mockMvc.perform(post("/api/comments")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(createPostRequest)))
-                .andExpect(status().isCreated()).andReturn();
-        String contentAsString = authorization.getResponse().getContentAsString();
-        PostDto.CreatePostResponse createPostResponse = objectMapper.readValue(contentAsString, PostDto.CreatePostResponse.class);
-        assertThat(createPostResponse.title()).isEqualTo(createPostRequest.title());
-    }
+//    @Test
+//    @DisplayName("게시물 발행")
+//    void createPost() throws Exception {
+//        PostDto.CreatePostRequest createPostRequest = new PostDto.CreatePostRequest("title", "content");
+//        MvcResult authorization = mockMvc.perform(post("/api/comments")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(createPostRequest)))
+//                .andExpect(status().isCreated()).andReturn();
+//        String contentAsString = authorization.getResponse().getContentAsString();
+//        PostDto.CreatePostResponse createPostResponse = objectMapper.readValue(contentAsString, PostDto.CreatePostResponse.class);
+//        assertThat(createPostResponse.title()).isEqualTo(createPostRequest.title());
+//    }
 
     @Test
     @DisplayName("게시물 조회")

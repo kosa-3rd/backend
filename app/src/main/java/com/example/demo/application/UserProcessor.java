@@ -18,12 +18,11 @@ public class UserProcessor {
     public SignUpInfo signup(UserCommand.SignUp command) {
         userService.validateUser(command.email());
         User user = userService.saveUser(new User(command.email(), command.username(), command.password()));
-        return new SignUpInfo(user.getUsername(), tokenManager.generateToken(user.getUsername()));
+        return new SignUpInfo(user.getUsername(), tokenManager.generateToken(user.getUserEmail()));
     }
     public UserInfo login(UserCommand.Login command) {
         User login = userService.login(command.email(), command.password());
-        TokenManager tokenManager = new TokenManager();
-        return new UserInfo(login.getUserEmail(), tokenManager.generateToken(login.getUsername()));
+        return new UserInfo(login.getUserEmail(), tokenManager.generateToken(login.getUserEmail()));
     }
 
     public User deleteUser(UserCommand.Delete delete) {

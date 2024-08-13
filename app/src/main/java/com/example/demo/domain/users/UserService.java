@@ -2,6 +2,7 @@ package com.example.demo.domain.users;
 
 import com.example.demo.domain.posts.Post;
 import com.example.demo.domain.posts.PostCommand;
+import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,9 +13,11 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final EntityManager em;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, EntityManager em) {
         this.userRepository = userRepository;
+        this.em = em;
     }
 
     @Transactional
@@ -27,17 +30,17 @@ public class UserService {
 
     @Transactional
     public User login(String username, String password) {
-        return userRepository.getUserByEmailAndPassword(username,password).orElseThrow(
-                ()-> new RuntimeException("사용자 정보를 찾을 수 없습니다.")
+        User user = userRepository.getUserByEmailAndPassword(username, password).orElseThrow(
+                () -> new RuntimeException("사용자 정보를 찾을 수 없습니다.")
         );
+        em.flush();
+        return user;
     }
 
     @Transactional
-    public void validateUser(String email) {
-        userRepository.getUserByEmail(email).ifPresent(
-                user -> {
-                    throw new RuntimeException("이미 가입된 사용자입니다.");
-                }
+    public User validateUser(String email) {
+        return userRepository.getUserByEmail(email).orElseThrow(
+                ()-> new RuntimeException("wow wrong")
         );
     }
     
@@ -77,16 +80,10 @@ public class UserService {
     }
 
     @Transactional
-    public Post savePost(String userEmail, Post post) {
-        return userRepository.getUserByEmail(userEmail).map(
-                user -> {
-                    user.addPosts(post);
-                    userRepository.saveUser(user);
-                    return post;
-                }
-        ).orElseThrow(
-                ()-> new RuntimeException("사용자 정보를 찾을 수 없습니다.")
-        );
+    public Post savePost(User user, Post post) {
+        user.addPosts(post);
+        userRepository.saveUser(user);
+        return post;
     }
 
     public List<Post> getAllPosts() {
@@ -134,5 +131,10 @@ public class UserService {
         return userRepository.getUserByEmail(userEmail).orElseThrow(
                 ()-> new RuntimeException("사용자 정보를 찾을 수 없습니다.")
         );
+    }
+
+    @Transactional
+    public List<User> getAll() {
+        return userRepository.getAll();
     }
 }

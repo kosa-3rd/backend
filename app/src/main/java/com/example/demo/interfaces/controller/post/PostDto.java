@@ -7,7 +7,7 @@ import java.util.List;
 
 @UtilityClass
 public class PostDto {
-    public record CreatePostRequest(String title, String content) {
+    public record CreatePostRequest(String title, String content, String station) {
     }
     public record CreatePostResponse(String title){
     }

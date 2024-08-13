@@ -17,18 +17,25 @@ public class TokenManager {
         return tokenMap.get(username);
     }
     public String generateToken(String username){
-        UUID uuid = UUID.randomUUID();
-        tokenMap.put(username, uuid.toString());
-        return uuid.toString();
+
+        String token;
+        do{
+            token = UUID.randomUUID().toString();
+        } while(tokenMap.containsValue(token));
+        tokenMap.put(username, token);
+        tokenMap.forEach((key,value) -> System.out.println(key + ": " + value)
+        );
+        return token;
     }
 
     public String validateToken( String token) {
+        tokenMap.forEach((key,value) -> System.out.println(key + ": " + value));
+        System.out.println(token);
         if(!tokenMap.containsValue(token)){
             throw new RuntimeException("토큰이 유효하지 않습니다.");
         }
-        Set<String> collect = tokenMap.entrySet().stream()
+        return tokenMap.entrySet().stream()
                 .filter(entry -> entry.getValue().equals(token))
-                .map(Map.Entry::getKey).collect(Collectors.toSet());
-        return collect.iterator().next();
+                .map(Map.Entry::getKey).findFirst().orElseThrow(()-> new RuntimeException("token user not found"));
     }
 }
