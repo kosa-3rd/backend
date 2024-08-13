@@ -38,7 +38,7 @@ public class PostProcessor {
         String token = createPostCommand.token();
         String userEmail = tokenManager.validateToken(token);
         System.out.println(userEmail);
-        Post post = new Post(createPostCommand.title(), createPostCommand.content());
+        Post post = new Post(createPostCommand.title(), createPostCommand.content(), createPostCommand.station());
         User user  = userService.validateUser(userEmail);
         return userService.savePost(user, post);
     }
