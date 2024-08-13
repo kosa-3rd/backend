@@ -33,9 +33,10 @@ public class Post {
 
     public Post(){}
 
-    public Post(String title, String content) {
+    public Post(String title, String content, String station) {
         this.title = title;
         this.content = content;
+        this.station = station;
     }
 
     public void updateContent(String content) {

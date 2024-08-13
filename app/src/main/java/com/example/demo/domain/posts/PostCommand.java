@@ -11,7 +11,7 @@ public class PostCommand {
     public record UpdatePost(String token, String title, String content, Long postId) {
     }
 
-    public record CreatePost(String token, String title, String content) {
+    public record CreatePost(String token, String title, String content, String station) {
     }
 
     public record DeletePost(String token, String title) {
