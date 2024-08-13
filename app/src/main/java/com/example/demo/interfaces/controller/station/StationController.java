@@ -1,6 +1,7 @@
 package com.example.demo.interfaces.controller.station;
 
 import com.example.demo.domain.stations.StationService;
+import com.example.demo.domain.stations.TrainInfo;
 import com.example.demo.interfaces.controller.station.dto.StationDTO;
 import com.example.demo.interfaces.controller.station.dto.StationInfoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class StationController {
         return new ResponseEntity<List<StationInfoDTO>> (stationService.getStationsBySubwayId(subwayId), HttpStatus.OK);
     }
     @GetMapping("/{name}")
-    public StationDTO.StationInfo getStationArrivalInfo(@PathVariable String name){
-        return new StationDTO.StationInfo(stationService.getData(name));
+    public List<TrainInfo> getStationArrivalInfo(@PathVariable String name){
+        return stationService.getData(name);
     }
 }
