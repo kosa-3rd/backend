@@ -80,7 +80,9 @@ public class UserService {
     }
 
     @Transactional
-    public Post savePost(User user, Post post) {
+    public Post savePost(String userEmail, Post post) {
+        Optional<User> userByEmail = userRepository.getUserByEmail(userEmail);
+        User user = userByEmail.orElseThrow(() -> new RuntimeException("exception"));
         user.addPosts(post);
         userRepository.saveUser(user);
         return post;

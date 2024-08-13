@@ -3,6 +3,7 @@ package com.example.demo.application;
 import com.example.demo.domain.posts.Post;
 import com.example.demo.domain.posts.PostCommand;
 import com.example.demo.domain.posts.PostService;
+import com.example.demo.domain.users.User;
 import com.example.demo.domain.users.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -35,8 +36,7 @@ public class PostProcessor {
     public Post publishPost(PostCommand.CreatePost createPostCommand) {
         String token = createPostCommand.token();
         String userEmail = tokenManager.validateToken(token);
-        Post post = new Post(createPostCommand.title(), createPostCommand.content());
-        userService.validateUser(userEmail);
+        Post post = new Post(createPostCommand.title(), createPostCommand.content(), createPostCommand.station());
         return userService.savePost(userEmail, post);
     }
 
