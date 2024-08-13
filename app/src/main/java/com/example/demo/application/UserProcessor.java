@@ -16,7 +16,7 @@ public class UserProcessor {
     }
 
     public SignUpInfo signup(UserCommand.SignUp command) {
-        userService.validateUser(command.email());
+        userService.checkUser(command.email());
         User user = userService.saveUser(new User(command.email(), command.username(), command.password()));
         return new SignUpInfo(user.getUsername(), tokenManager.generateToken(user.getUserEmail()));
     }

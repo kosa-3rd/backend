@@ -43,6 +43,10 @@ public class UserService {
                 ()-> new RuntimeException("wow wrong")
         );
     }
+    @Transactional
+    public boolean checkUser(String email){
+        return userRepository.getUserByEmail(email).isEmpty();
+    }
     
     @Transactional
     public boolean validateCheck(String email){

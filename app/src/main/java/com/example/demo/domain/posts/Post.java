@@ -29,7 +29,8 @@ public class Post {
     private String station;
 
     @CreationTimestamp
-    private LocalDateTime uploadDate;
+    @Column(name="created_at")
+    private LocalDateTime createdAt;
 
     public Post(){}
 

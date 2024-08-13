@@ -24,7 +24,7 @@ public class PostController {
             @RequestBody PostDto.GetPostRequest request) {
         return new PostDto.GetPostResponse(request.title(),"contents");
     }
-    @GetMapping("/{page}")
+    @GetMapping("/{page}/")
     public PostDto.PostListResponse getPostList(
             @PathVariable int page) {
         return PostMapper.toPostListResponse(postProcessor.getPosts(

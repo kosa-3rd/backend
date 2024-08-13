@@ -19,8 +19,8 @@ public class StationService {
     @Autowired
     private StationRepository stationRepository;
 
-    @Value("${STATION_KEY}")
-    private String stationKey;
+//    @Value("${STATION_KEY}")
+    private String stationKey = "asdf";
 
 
     @Autowired
