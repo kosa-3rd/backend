@@ -3,6 +3,9 @@ package com.example.demo.domain.posts;
 import com.example.demo.domain.users.User;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "posts")
@@ -21,6 +24,12 @@ public class Post {
     @Getter
     @ManyToOne
     private User user;
+
+    @Getter
+    private String station;
+
+    @CreationTimestamp
+    private LocalDateTime uploadDate;
 
     public Post(){}
 
