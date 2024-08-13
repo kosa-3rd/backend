@@ -2,7 +2,9 @@ package com.example.demo.application;
 
 import com.example.demo.domain.posts.Post;
 import com.example.demo.domain.posts.PostCommand;
+import com.example.demo.domain.posts.PostService;
 import com.example.demo.domain.users.UserService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,14 +13,16 @@ import java.util.List;
 public class PostProcessor {
     private final UserService userService;
     private final TokenManager tokenManager;
+    private final PostService postService;
 
 
-    public PostProcessor(UserService userService, TokenManager tokenManager) {
+    public PostProcessor(UserService userService, TokenManager tokenManager, PostService postService) {
         this.userService = userService;
         this.tokenManager = tokenManager;
+        this.postService = postService;
     }
 
-    public List<Post> getPosts(PostCommand.UserPosts command){
+    public List<Post> getUserPosts(PostCommand.UserPosts command){
         String token = command.token();
         String userEmail = tokenManager.validateToken(token);
         userService.validateUser(userEmail);
@@ -48,5 +52,9 @@ public class PostProcessor {
         String userEmail = tokenManager.validateToken(token);
         userService.validateUser(userEmail);
         return userService.deletePost(userEmail, deletePostCommand);
+    }
+
+    public Page<Post> getPosts(PostCommand.GetPosts userPostComand) {
+        return postService.getPosts(userPostComand.page());
     }
 }

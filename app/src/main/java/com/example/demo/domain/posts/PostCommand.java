@@ -16,4 +16,7 @@ public class PostCommand {
 
     public record DeletePost(String token, String title) {
     }
+
+    public record GetPosts(int page) {
+    }
 }

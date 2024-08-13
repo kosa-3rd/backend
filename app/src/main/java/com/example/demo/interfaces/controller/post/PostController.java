@@ -24,12 +24,22 @@ public class PostController {
             @RequestBody PostDto.GetPostRequest request) {
         return new PostDto.GetPostResponse(request.title(),"contents");
     }
+    @GetMapping("/{page}")
+    public PostDto.PostListResponse getPostList(
+            @PathVariable int page) {
+        return PostMapper.toPostListResponse(postProcessor.getPosts(
+                PostMapper.toGetPostComand( page)
+        ));
+    }
+
+
     @GetMapping("/list")
-    public PostDto.UserPostListResponse getPostList(@RequestHeader("Authorization") String token) {
-        return PostMapper.toUserPostListResponse(postProcessor.getPosts(
+    public PostDto.UserPostListResponse getUserPostList(@RequestHeader("Authorization") String token) {
+        return PostMapper.toUserPostListResponse(postProcessor.getUserPosts(
                 PostMapper.toUserPostComand(token)
         ));
     }
+
     @GetMapping("/all")
     public PostDto.UserPostListResponse getAllPostList() {
         return PostMapper.toUserPostListResponse(postProcessor.getAllPosts());
