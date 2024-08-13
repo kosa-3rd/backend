@@ -15,7 +15,7 @@ public class UserMapper {
     }
 
     public static UserDto.LoginResponse toLoginResponse(UserProcessor.UserInfo login) {
-        return new UserDto.LoginResponse(login.email(), login.token());
+        return new UserDto.LoginResponse(login.email(), login.nickname(), login.token());
     }
 
     public static UserCommand.Login toLogin(UserDto.LoginRequest request) {

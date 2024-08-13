@@ -41,7 +41,7 @@ public class UserDto {
 
     }
 
-    public record LoginResponse(String email, String token) {
+    public record LoginResponse(String email, String nickname, String token) {
     }
 
     public record DeleteRequest(String email) {

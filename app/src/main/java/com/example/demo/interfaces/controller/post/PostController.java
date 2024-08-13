@@ -24,11 +24,20 @@ public class PostController {
             @RequestBody PostDto.GetPostRequest request) {
         return new PostDto.GetPostResponse(request.title(),"contents");
     }
-    @GetMapping("/{page}/")
+
+    @GetMapping("/subway/{subwayId}/{page}/")
     public PostDto.PostListResponse getPostList(
-            @PathVariable int page) {
-        return PostMapper.toPostListResponse(postProcessor.getPosts(
-                PostMapper.toGetPostComand( page)
+            @PathVariable int subwayId, @PathVariable int page) {
+        return PostMapper.toPostListResponse(postProcessor.getPostsWithSubwayId(
+                PostMapper.toGetPostComandWithSubwayId(page, subwayId)
+        ));
+    }
+
+    @GetMapping("/station/{station}/{page}/")
+    public PostDto.PostListResponse getPostList(
+            @PathVariable int page, @PathVariable String station) {
+        return PostMapper.toPostListResponse(postProcessor.getPostsWithStation(
+                PostMapper.toGetPostComandWithStation(page, station)
         ));
     }
 

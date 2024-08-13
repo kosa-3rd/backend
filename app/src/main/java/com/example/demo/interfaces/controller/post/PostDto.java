@@ -1,6 +1,7 @@
 package com.example.demo.interfaces.controller.post;
 
 import com.example.demo.domain.posts.Post;
+import com.example.demo.interfaces.controller.post.dto.PostInfoDTO;
 import lombok.experimental.UtilityClass;
 import org.springframework.data.domain.Page;
 
@@ -26,5 +27,5 @@ public class PostDto {
     }
 
     public record UserPostListResponse(List<Post> posts) { }
-    public record PostListResponse(Page<Post> posts) { }
+    public record PostListResponse(Page<PostInfoDTO> posts) { }
 }

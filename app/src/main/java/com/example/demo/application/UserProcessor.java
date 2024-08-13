@@ -17,12 +17,12 @@ public class UserProcessor {
 
     public SignUpInfo signup(UserCommand.SignUp command) {
         userService.checkUser(command.email());
-        User user = userService.saveUser(new User(command.email(), command.username(), command.password()));
+        User user = userService.saveUser(new User(command.email(), command.username(), command.password(), command.nickname()));
         return new SignUpInfo(user.getUsername(), tokenManager.generateToken(user.getUserEmail()));
     }
     public UserInfo login(UserCommand.Login command) {
         User login = userService.login(command.email(), command.password());
-        return new UserInfo(login.getUserEmail(), tokenManager.generateToken(login.getUserEmail()));
+        return new UserInfo(login.getUserEmail(), login.getNickname(), tokenManager.generateToken(login.getUserEmail()));
     }
 
     public User deleteUser(UserCommand.Delete delete) {
@@ -44,6 +44,6 @@ public class UserProcessor {
 
     public record SignUpInfo(String email, String token) {
     }
-    public record UserInfo(String email, String token) {
+    public record UserInfo(String email, String nickname, String token) {
     }
 }

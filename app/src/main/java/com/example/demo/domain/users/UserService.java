@@ -87,6 +87,7 @@ public class UserService {
     public Post savePost(String userEmail, Post post) {
         Optional<User> userByEmail = userRepository.getUserByEmail(userEmail);
         User user = userByEmail.orElseThrow(() -> new RuntimeException("exception"));
+        post.setUser(user);
         user.addPosts(post);
         userRepository.saveUser(user);
         return post;

@@ -5,6 +5,7 @@ import com.example.demo.domain.posts.PostCommand;
 import com.example.demo.domain.posts.PostService;
 import com.example.demo.domain.users.User;
 import com.example.demo.domain.users.UserService;
+import com.example.demo.interfaces.controller.post.dto.PostInfoDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
@@ -54,7 +55,11 @@ public class PostProcessor {
         return userService.deletePost(userEmail, deletePostCommand);
     }
 
-    public Page<Post> getPosts(PostCommand.GetPosts userPostComand) {
-        return postService.getPosts(userPostComand.page());
+    public Page<PostInfoDTO> getPostsWithSubwayId(PostCommand.GetPostsWithSubwayId userPostComand) {
+        return postService.getPosts(userPostComand.page(), userPostComand.subwayId());
+    }
+
+    public Page<PostInfoDTO> getPostsWithStation(PostCommand.GetPostsWithStation userPostComand) {
+        return postService.getPosts(userPostComand.page(), userPostComand.station());
     }
 }

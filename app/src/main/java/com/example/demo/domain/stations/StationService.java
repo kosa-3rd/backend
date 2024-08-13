@@ -33,7 +33,7 @@ public class StationService {
     }
 
     public List<TrainInfo> getData(String stationName){
-        String uri = "http://swopenapi.seoul.go.kr/api/subway/{key}/json/realtimeStationArrival/1/6/";
+        String uri = "http://swopenapi.seoul.go.kr/api/subway/715070786e726a7335327259436b49/json/realtimeStationArrival/1/6/";
         String response = restTemplate.getForObject(uri, String.class, stationKey);
         return getThreeStationsInfo(stationName);
 
