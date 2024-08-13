@@ -2,6 +2,7 @@ package com.example.demo.interfaces.controller.post;
 
 import com.example.demo.domain.posts.Post;
 import com.example.demo.domain.posts.PostCommand;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -9,6 +10,9 @@ public class PostMapper{
 
     public static PostDto.UserPostListResponse toUserPostListResponse(List<Post> posts) {
         return new PostDto.UserPostListResponse(posts);
+    }
+    public static PostDto.PostListResponse toPostListResponse(Page<Post> posts) {
+        return new PostDto.PostListResponse(posts);
     }
 
     public static PostCommand.UserPosts toUserPostComand(String token) {
@@ -37,5 +41,10 @@ public class PostMapper{
 
     public static PostDto.DeletePostResponse toDeletePostResponse(Post post) {
         return new PostDto.DeletePostResponse(post.getTitle());
+    }
+
+    public static PostCommand.GetPosts toGetPostComand(int page) {
+        return new PostCommand.GetPosts(page);
+
     }
 }

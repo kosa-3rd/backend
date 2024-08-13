@@ -2,6 +2,10 @@ package com.example.demo.infra.posts;
 
 import com.example.demo.domain.posts.Post;
 import com.example.demo.domain.posts.PostRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,8 +25,9 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public List<Post> getPosts() {
-        return postJPARepository.findAll();
+    public Page<Post> getPosts(int page) {
+        Pageable pageable = PageRequest.of(page, 15, Sort.by("createdAt").descending());
+        return postJPARepository.findAllByOrderByCreatedAtDesc(pageable);
     }
 
 

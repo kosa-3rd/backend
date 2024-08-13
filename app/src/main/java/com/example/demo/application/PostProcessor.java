@@ -3,10 +3,9 @@ package com.example.demo.application;
 import com.example.demo.domain.posts.Post;
 import com.example.demo.domain.posts.PostCommand;
 import com.example.demo.domain.posts.PostService;
-import com.example.demo.domain.users.User;
 import com.example.demo.domain.users.UserService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class PostProcessor {
         this.postService = postService;
     }
 
-    public List<Post> getPosts(PostCommand.UserPosts command){
+    public List<Post> getUserPosts(PostCommand.UserPosts command){
         String token = command.token();
         String userEmail = tokenManager.validateToken(token);
         userService.validateUser(userEmail);
@@ -33,14 +32,12 @@ public class PostProcessor {
         return userService.getAllPosts();
     }
 
-    @Transactional
     public Post publishPost(PostCommand.CreatePost createPostCommand) {
         String token = createPostCommand.token();
         String userEmail = tokenManager.validateToken(token);
-        System.out.println(userEmail);
-        Post post = new Post(createPostCommand.title(), createPostCommand.content(), createPostCommand.station());
-        User user  = userService.validateUser(userEmail);
-        return userService.savePost(user, post);
+        Post post = new Post(createPostCommand.title(), createPostCommand.content());
+        userService.validateUser(userEmail);
+        return userService.savePost(userEmail, post);
     }
 
     public Post updatePost(PostCommand.UpdatePost updatePostCommand) {
@@ -55,5 +52,9 @@ public class PostProcessor {
         String userEmail = tokenManager.validateToken(token);
         userService.validateUser(userEmail);
         return userService.deletePost(userEmail, deletePostCommand);
+    }
+
+    public Page<Post> getPosts(PostCommand.GetPosts userPostComand) {
+        return postService.getPosts(userPostComand.page());
     }
 }

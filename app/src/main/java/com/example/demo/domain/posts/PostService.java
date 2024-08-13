@@ -1,5 +1,6 @@
 package com.example.demo.domain.posts;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,8 +12,8 @@ public class PostService {
     public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
-    public List<Post> getPosts(){
-        return postRepository.getPosts();
+    public Page<Post> getPosts(int page){
+        return postRepository.getPosts(page);
     }
 
     public Post savePost(Post post){
