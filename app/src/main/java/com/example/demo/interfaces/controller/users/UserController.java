@@ -65,6 +65,22 @@ public class UserController {
         );
 
     }
-
+    @PatchMapping("/password")
+    public UserDto.ModifyResponse modifyPassword(@RequestHeader("Authorization") String token,
+            @RequestBody UserDto.PasswordModifyRequest request) {
+        request.validate();
+        return UserMapper.toModifyResponse(
+                userProcessor.modifyPassword(
+                        UserMapper.toModifyPassword(request,token)
+                )
+        );
+    }
+    @GetMapping("/validate/password")
+    public Boolean passwordCheck(@RequestBody String userEmail){
+        if(userEmail.isBlank() || userEmail.isEmpty()){
+            return false;
+        }
+        return userProcessor.validatePassword(userEmail);
+    }
 
 }

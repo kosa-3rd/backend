@@ -20,4 +20,6 @@ public interface UserRepository {
     List<Post> getAllPosts();
 
     List<User>  getAll();
+
+    Optional<User> getUserByPassword(String password);
 }

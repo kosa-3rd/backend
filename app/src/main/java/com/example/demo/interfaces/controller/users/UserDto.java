@@ -68,4 +68,12 @@ public class UserDto {
 
     public record ModifyResponse (String username) {
     }
+
+    public record PasswordModifyRequest(String password) {
+        public void validate() {
+            if (password == null || password.isBlank()) {
+                throw new IllegalArgumentException("password is blank");
+            }
+        }
+    }
 }

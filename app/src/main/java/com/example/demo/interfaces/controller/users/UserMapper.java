@@ -37,4 +37,8 @@ public class UserMapper {
     public static UserDto.ModifyResponse toModifyResponse(User user) {
         return new UserDto.ModifyResponse(user.getUsername());
     }
+
+    public static UserCommand.ModifyPassword toModifyPassword(UserDto.PasswordModifyRequest request, String token) {
+        return new UserCommand.ModifyPassword(request.password(), token);
+    }
 }

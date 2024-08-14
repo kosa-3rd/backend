@@ -144,4 +144,11 @@ public class UserService {
     public List<User> getAll() {
         return userRepository.getAll();
     }
+
+    @Transactional
+    public User getUserByPassword(String password) {
+        return userRepository.getUserByPassword(password).orElseThrow(
+                ()-> new RuntimeException("사용자 정보를 찾을 수 없습니다.")
+        );
+    }
 }
