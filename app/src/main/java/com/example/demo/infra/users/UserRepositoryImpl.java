@@ -56,4 +56,9 @@ public class UserRepositoryImpl implements UserRepository {
     public List<User> getAll() {
         return userJPARepository.findAll();
     }
+
+    @Override
+    public Optional<User> getUserByPassword(String password) {
+        return userJPARepository.findByUserPassword(password);
+    }
 }
