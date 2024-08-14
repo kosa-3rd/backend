@@ -25,7 +25,7 @@ public class PostController {
         return new PostDto.GetPostResponse(request.title(),"contents");
     }
 
-    @GetMapping("/subway/{subwayId}/{page}/")
+    @GetMapping("/subway/{subwayId}/{page}")
     public PostDto.PostListResponse getPostList(
             @PathVariable int subwayId, @PathVariable int page) {
         return PostMapper.toPostListResponse(postProcessor.getPostsWithSubwayId(
@@ -33,7 +33,7 @@ public class PostController {
         ));
     }
 
-    @GetMapping("/station/{station}/{page}/")
+    @GetMapping("/station/{station}/{page}")
     public PostDto.PostListResponse getPostList(
             @PathVariable int page, @PathVariable String station) {
         return PostMapper.toPostListResponse(postProcessor.getPostsWithStation(

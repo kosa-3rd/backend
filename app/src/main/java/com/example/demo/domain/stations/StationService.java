@@ -1,26 +1,28 @@
 package com.example.demo.domain.stations;
 
+import com.example.demo.domain.subways.SubwayRepository;
 import com.example.demo.interfaces.controller.station.dto.StationDTO;
 import com.example.demo.interfaces.controller.station.dto.StationInfoDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 @Service
 public class StationService {
     @Autowired
     private StationRepository stationRepository;
+    @Autowired
+    private SubwayRepository subwayRepository;
 
-//    @Value("${STATION_KEY}")
-    private String stationKey = "asdf";
+    @Value("${STATION_KEY}")
+    private String stationKey;
 
 
     @Autowired
@@ -33,15 +35,16 @@ public class StationService {
     }
 
     public List<TrainInfo> getData(String stationName){
-        String uri = "http://swopenapi.seoul.go.kr/api/subway/715070786e726a7335327259436b49/json/realtimeStationArrival/1/6/";
+        String uri = "http://swopenapi.seoul.go.kr/api/subway/{key}/json/realtimeStationArrival/1/6/" + stationName;
         String response = restTemplate.getForObject(uri, String.class, stationKey);
-        return getThreeStationsInfo(stationName);
-
+        return getThreeStationsInfo(response);
     }
+
     public List<TrainInfo> processSubwayInfo(String jsonResponse) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode root = mapper.readTree(jsonResponse);
-        JsonNode realtimeArrivalList = root.path("realtimeStationArrival").path("row");
+        JsonNode realtimeArrivalList = root.path("realtimeArrivalList");
+        System.out.println("----" + realtimeArrivalList);
 
         List<TrainInfo> trainInfoList = new ArrayList<>();
 
@@ -86,6 +89,8 @@ public class StationService {
             String[] adjacentStations = extractAdjacentStations(currentStationInfo);
 
             List<TrainInfo> threeStationInfo = new ArrayList<>();
+            System.out.println("-----" + currentStationInfo);
+            System.out.println("adj : " + Arrays.toString(adjacentStations));
 
             threeStationInfo.addAll(processSubwayInfo(adjacentStations[0]));
             threeStationInfo.addAll(currentStationInfo);
@@ -95,6 +100,7 @@ public class StationService {
 
         }
         catch (Exception e){
+            e.printStackTrace();
             throw new IllegalArgumentException("Invalid station name");
         }
 

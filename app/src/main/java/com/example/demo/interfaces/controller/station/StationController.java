@@ -21,8 +21,9 @@ public class StationController {
     public ResponseEntity<List<StationInfoDTO>> getStationsBySubwayId(@RequestParam long subwayId) {
         return new ResponseEntity<List<StationInfoDTO>> (stationService.getStationsBySubwayId(subwayId), HttpStatus.OK);
     }
-    @GetMapping("/{name}")
+    @GetMapping("/arrival/{name}")
     public List<TrainInfo> getStationArrivalInfo(@PathVariable String name){
         return stationService.getData(name);
     }
+
 }
