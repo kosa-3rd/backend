@@ -63,8 +63,8 @@ public class UserController {
                         UserMapper.toDelete(request,token)
                 )
         );
-
     }
+
     @PatchMapping("/password")
     public UserDto.ModifyResponse modifyPassword(@RequestHeader("Authorization") String token,
                                                  @RequestBody UserDto.PasswordModifyRequest request) {

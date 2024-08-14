@@ -1,8 +1,12 @@
 package com.example.demo.domain.stations;
 
 import com.example.demo.domain.subways.SubwayRepository;
+import com.example.demo.infra.stations.StationJPARepository;
+import com.example.demo.interfaces.controller.station.dto.StationArrivalDTO;
 import com.example.demo.interfaces.controller.station.dto.StationDTO;
 import com.example.demo.interfaces.controller.station.dto.StationInfoDTO;
+import com.example.demo.interfaces.controller.station.dto.TrainArrivalDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +24,8 @@ public class StationService {
     private StationRepository stationRepository;
     @Autowired
     private SubwayRepository subwayRepository;
+    @Autowired
+    private StationJPARepository stationJPARepository;
 
     @Value("${STATION_KEY}")
     private String stationKey;
@@ -63,6 +69,7 @@ public class StationService {
 
         return trainInfoList;
     }
+
     public String[] extractAdjacentStations(List<TrainInfo> currentStationInfo) {
         String prevStation = null;
         String nextStation = null;
@@ -104,6 +111,50 @@ public class StationService {
             throw new IllegalArgumentException("Invalid station name");
         }
 
+    }
+
+    public List<StationArrivalDTO> getStationArrivalInfo(String station) throws JsonProcessingException {
+        List<StationArrivalDTO> stationArrivalDTOS = stationJPARepository.getStationArrivalInfoByStationName(station);
+
+        String uri = "http://swopenapi.seoul.go.kr/api/subway/{key}/json/realtimeStationArrival/1/" + stationArrivalDTOS.size() * 4 + "/" + station;
+        String response = restTemplate.getForObject(uri, String.class, stationKey);
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = mapper.readTree(response);
+        JsonNode realtimeArrivalList = root.path("realtimeArrivalList");
+
+        for (JsonNode trainData : realtimeArrivalList) {
+
+            System.out.println(trainData.path("statnTid").asLong());
+
+            String trainTo = "▶" + stationJPARepository.getNameById(trainData.path("statnTid").asLong()).orElse("종점")
+                    + "(" + trainData.path("trainLineNm").asText().split(" -")[0] + ")";
+            String arvMsg = trainData.path("arvlMsg2").asText();
+            int leftSeconds = Integer.parseInt(trainData.path("barvlDt").asText());
+
+            if (leftSeconds > 0) {
+                String[] rcvTime = trainData.path("recptnDt").asText().split(" ")[1].split(":");
+
+                int min = (Integer.parseInt(rcvTime[1]) + ((Integer.parseInt(rcvTime[0]) + leftSeconds) / 60)) % 60;
+                int hour = (Integer.parseInt(rcvTime[0]) + ((Integer.parseInt(rcvTime[1]) + ((Integer.parseInt(rcvTime[0]) + leftSeconds) / 60)) / 60)) % 24;
+
+                arvMsg = String.format("%02d", hour) + ":" + String.format("%02d", min) + " 도착 예정";
+            }
+
+            TrainArrivalDTO trainArrivalDTO = new TrainArrivalDTO(
+                    trainTo,
+                    arvMsg
+            );
+
+            for (StationArrivalDTO dto: stationArrivalDTOS) {
+                if (Long.parseLong(trainData.path("subwayId").asText()) == dto.getSubwayId()) {
+                    dto.getTrainArrivals().add(trainArrivalDTO);
+                }
+            }
+        }
+
+
+        return stationArrivalDTOS;
     }
 
 
