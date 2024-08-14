@@ -76,4 +76,12 @@ public class UserDto {
             }
         }
     }
+
+    public record NickNameModifyRequest (String nickname){
+        public void validate() {
+            if (nickname == null || nickname.isBlank()) {
+                throw new IllegalArgumentException("");
+            }
+        }
+    }
 }

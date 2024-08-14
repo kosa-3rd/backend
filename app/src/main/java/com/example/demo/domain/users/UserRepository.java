@@ -21,5 +21,5 @@ public interface UserRepository {
 
     List<User>  getAll();
 
-    Optional<User> getUserByPassword(String password);
+    Optional<User> getUserByPassword(String userEmail, String password);
 }

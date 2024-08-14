@@ -14,4 +14,7 @@ public class UserCommand {
 
     public record ModifyPassword(String password, String token) {
     }
+
+    public record NickNameModify(String nickname, String token) {
+    }
 }

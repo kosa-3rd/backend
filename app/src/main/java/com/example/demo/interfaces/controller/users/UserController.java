@@ -67,21 +67,27 @@ public class UserController {
     }
     @PatchMapping("/password")
     public UserDto.ModifyResponse modifyPassword(@RequestHeader("Authorization") String token,
-            @RequestBody UserDto.PasswordModifyRequest request) {
-        request.validate();
+                                                 @RequestBody UserDto.PasswordModifyRequest request) {
+        System.out.println("변경하려는 password: " + request.password());  // Log to see the received password
+
+        request.validate();  // This will throw an error if the password is blank
+
         return UserMapper.toModifyResponse(
                 userProcessor.modifyPassword(
-                        UserMapper.toModifyPassword(request,token)
+                        UserMapper.toModifyPassword(request, token)
                 )
         );
     }
     @GetMapping("/validate/password")
-    public Boolean passwordCheck(@RequestBody String userEmail){
-        if(userEmail.isBlank() || userEmail.isEmpty()){
+    public Boolean passwordCheck(@RequestHeader("Authorization") String token,
+            @RequestParam String userEmail) {
+        System.out.println("비밀번호 확인 password: " + userEmail);  // 로그 추가
+        if (userEmail.isBlank() || userEmail.isEmpty()) {
             return false;
         }
-        return userProcessor.validatePassword(userEmail);
+        return userProcessor.validatePassword(token,userEmail);
     }
+
     @PatchMapping("/nickname")
     public UserDto.ModifyResponse modifyNickname(@RequestHeader("Authorization") String token,
             @RequestBody UserDto.NickNameModifyRequest request) {

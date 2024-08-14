@@ -44,14 +44,22 @@ public class UserProcessor {
 
     public User modifyPassword(UserCommand.ModifyPassword modifyPassword) {
         String userEmail = tokenManager.validateToken(modifyPassword.token());
-        User user = userService.getUserByPassword(userEmail);
+        User user = userService.getUserByEmail(userEmail);
+        System.out.println(modifyPassword.password());
         user.setPassword(modifyPassword.password());
         return userService.saveUser(user);
     }
 
-    public Boolean validatePassword(String userEmail) {
-        User userByPassword = userService.getUserByPassword(userEmail);
-        return userByPassword != null;
+    public Boolean validatePassword(String token, String password) {
+        String userEmail = tokenManager.validateToken(token);
+        User user = userService.getUserByEmail(userEmail);
+
+        // 비밀번호가 맞는지 확인
+        if (user == null || !user.getPassword().equals(password)) {
+            return false;
+        }
+
+        return true;
     }
 
     public User modifyNickName(UserCommand.NickNameModify nickNameodify) {

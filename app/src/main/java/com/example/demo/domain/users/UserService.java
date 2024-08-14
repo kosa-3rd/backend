@@ -146,8 +146,8 @@ public class UserService {
     }
 
     @Transactional
-    public User getUserByPassword(String password) {
-        return userRepository.getUserByPassword(password).orElseThrow(
+    public User getUserByPassword(String userEmail, String password) {
+        return userRepository.getUserByPassword(userEmail,password).orElseThrow(
                 ()-> new RuntimeException("사용자 정보를 찾을 수 없습니다.")
         );
     }

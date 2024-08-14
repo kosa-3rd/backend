@@ -58,7 +58,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> getUserByPassword(String password) {
-        return userJPARepository.findByUserPassword(password);
+    public Optional<User> getUserByPassword(String userEmail, String password) {
+        return userJPARepository.findByUserPassword(userEmail,password);
     }
 }

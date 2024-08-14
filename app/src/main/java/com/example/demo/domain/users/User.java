@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "users")
@@ -77,5 +78,10 @@ public class User {
     public void removePost(Post post) {
         posts.remove(post);
     }
+
+
+
+
+
 
 }
