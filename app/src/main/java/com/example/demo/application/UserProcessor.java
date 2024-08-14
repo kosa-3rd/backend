@@ -54,6 +54,13 @@ public class UserProcessor {
         return userByPassword != null;
     }
 
+    public User modifyNickName(UserCommand.NickNameModify nickNameodify) {
+        String userEmail = tokenManager.validateToken(nickNameodify.token());
+        User user = userService.getUserByEmail(userEmail);
+        user.setNickname(nickNameodify.nickname());
+        return userService.saveUser(user);
+    }
+
     public record SignUpInfo(String email, String token) {
     }
     public record UserInfo(String email, String nickname, String token) {

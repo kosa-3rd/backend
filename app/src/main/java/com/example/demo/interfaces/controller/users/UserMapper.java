@@ -41,4 +41,9 @@ public class UserMapper {
     public static UserCommand.ModifyPassword toModifyPassword(UserDto.PasswordModifyRequest request, String token) {
         return new UserCommand.ModifyPassword(request.password(), token);
     }
+
+    public static UserCommand.NickNameModify toNickNameodify(UserDto.NickNameModifyRequest request, String token) {
+        return new UserCommand.NickNameModify(request.nickname(), token);
+
+    }
 }

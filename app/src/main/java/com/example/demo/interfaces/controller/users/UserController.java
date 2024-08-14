@@ -82,5 +82,15 @@ public class UserController {
         }
         return userProcessor.validatePassword(userEmail);
     }
+    @PatchMapping("/nickname")
+    public UserDto.ModifyResponse modifyNickname(@RequestHeader("Authorization") String token,
+            @RequestBody UserDto.NickNameModifyRequest request) {
+        request.validate();
+        return UserMapper.toModifyResponse(
+                userProcessor.modifyNickName(
+                        UserMapper.toNickNameodify(request,token)
+                )
+        );
+    }
 
 }
