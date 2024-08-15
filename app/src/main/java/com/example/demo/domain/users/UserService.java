@@ -102,7 +102,7 @@ public class UserService {
         return userRepository.getUserByEmail(userEmail).map(
                 user -> {
                     Post post = user.getPosts().stream()
-                            .filter(p -> p.getTitle().equals(updatePostCommand.title()))
+                            .filter(p -> p.getId().equals(updatePostCommand.postId()))
                             .findFirst().orElseThrow(
                                     ()-> new RuntimeException("게시물을 찾을 수 없습니다.")
                             );
@@ -120,7 +120,7 @@ public class UserService {
         return userRepository.getUserByEmail(userEmail).map(
                 user -> {
                     Post post = user.getPosts().stream()
-                            .filter(p -> p.getTitle().equals(deletePostCommand.title()))
+                            .filter(p -> p.getId().equals(deletePostCommand.postId()))
                             .findFirst().orElseThrow(
                                     ()-> new RuntimeException("게시물을 찾을 수 없습니다.")
                             );

@@ -65,12 +65,13 @@ public class PostController {
                 )
         );
     }
-    @DeleteMapping
+    @DeleteMapping("/delete/{postId}")
     public PostDto.DeletePostResponse deletePost(@RequestHeader("Authorization") String token,
+            @PathVariable Long postId,
             @RequestBody PostDto.DeletePostRequest request) {
         return PostMapper.toDeletePostResponse(
                 postProcessor.deletePost(
-                        PostMapper.toDeletePostCommand(token, request)
+                        PostMapper.toDeletePostCommand(token, request, postId)
                 )
         );
     }

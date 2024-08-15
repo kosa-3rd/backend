@@ -14,7 +14,7 @@ public class PostCommand {
     public record CreatePost(String token, String title, String content, String station) {
     }
 
-    public record DeletePost(String token, String title) {
+    public record DeletePost(String token, String title, Long postId) {
     }
 
     public record GetPostsWithSubwayId(int page, int subwayId) {

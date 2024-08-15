@@ -36,8 +36,8 @@ public class PostMapper{
         return new PostCommand.CreatePost(token, request.title(), request.content(), request.station());
     }
 
-    public static PostCommand.DeletePost toDeletePostCommand(String token, PostDto.DeletePostRequest request) {
-        return new PostCommand.DeletePost(token,request.title());
+    public static PostCommand.DeletePost toDeletePostCommand(String token, PostDto.DeletePostRequest request, Long postId) {
+        return new PostCommand.DeletePost(token,request.title(), postId);
     }
 
     public static PostDto.DeletePostResponse toDeletePostResponse(Post post) {

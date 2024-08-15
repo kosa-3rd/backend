@@ -36,6 +36,7 @@ public class StationController {
         try {
             return stationService.getStationArrivalInfo(station);
         } catch(Exception e) {
+            System.out.println("-----------err");
             return new ArrayList<StationArrivalDTO>();
         }
     }
