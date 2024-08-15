@@ -19,7 +19,7 @@ public class PostDto {
     }
     public record DeletePostRequest(String title) {
     }
-    public record DeletePostResponse(String title){
+    public record DeletePostResponse(String title) {
     }
     public record GetPostRequest(String title) {
     }

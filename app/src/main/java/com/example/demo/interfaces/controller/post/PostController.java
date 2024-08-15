@@ -42,10 +42,10 @@ public class PostController {
     }
 
 
-    @GetMapping("/list")
-    public PostDto.UserPostListResponse getUserPostList(@RequestHeader("Authorization") String token) {
-        return PostMapper.toUserPostListResponse(postProcessor.getUserPosts(
-                PostMapper.toUserPostComand(token)
+    @GetMapping("/list/{page}")
+    public PostDto.PostListResponse getUserPostList(@RequestHeader("Authorization") String token, @PathVariable int page) {
+        return PostMapper.toPostListResponse(postProcessor.getUserPostsWithPage(
+                PostMapper.toGetUserPosts(page, token)
         ));
     }
 

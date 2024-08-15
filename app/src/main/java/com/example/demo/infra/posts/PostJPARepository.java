@@ -26,4 +26,9 @@ public interface PostJPARepository extends JpaRepository<Post, Long> {
             "    where sw.id = :subwayId" +
             ") order by p.createdAt desc")
     Page<PostInfoDTO> getPostsWithSubwayId(@Param("subwayId")int subwayId, Pageable pageable);
+
+    @Query("select new com.example.demo.interfaces.controller.post.dto.PostInfoDTO(p.id, p.content, p.station, p.createdAt, p.user.nickname)" +
+            "   from Post p " +
+            "   where p.user.userEmail = :email")
+    Page<PostInfoDTO> getPostsWithEmail(String email, Pageable pageable);
 }

@@ -14,4 +14,6 @@ public interface PostRepository{
     Page<PostInfoDTO> getPosts(int page, String station);
 
     Page<PostInfoDTO> getPosts(int page, int subwayId);
+
+    Page<PostInfoDTO> getPostsWithEmail(int page, String email);
 }

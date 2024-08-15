@@ -22,6 +22,10 @@ public class PostService {
         return postRepository.getPosts(page, station);
     }
 
+    public Page<PostInfoDTO> getPostsWithEmail(int page, String email) {
+        return postRepository.getPostsWithEmail(page, email);
+    }
+
     public Post savePost(Post post){
         return postRepository.savePost(post).orElseThrow(() -> new RuntimeException("Post save failed"));
     }

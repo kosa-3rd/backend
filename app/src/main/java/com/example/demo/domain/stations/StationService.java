@@ -132,7 +132,7 @@ public class StationService {
             String arvMsg = trainData.path("arvlMsg2").asText();
             int leftSeconds = Integer.parseInt(trainData.path("barvlDt").asText());
 
-            if (leftSeconds > 0) {
+            if (leftSeconds > 120) {
                 String[] rcvTime = trainData.path("recptnDt").asText().split(" ")[1].split(":");
 
                 int min = (Integer.parseInt(rcvTime[1]) + ((Integer.parseInt(rcvTime[0]) + leftSeconds) / 60)) % 60;

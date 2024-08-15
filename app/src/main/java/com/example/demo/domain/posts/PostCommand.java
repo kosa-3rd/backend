@@ -22,4 +22,11 @@ public class PostCommand {
 
     public record GetPostsWithStation(int page, String station) {
     }
+
+    public record GetUserPosts (int page, String token) {
+    }
+
+    public record GetUserPostsWithEmail(int page, String email) {
+
+    }
 }

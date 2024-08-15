@@ -62,4 +62,11 @@ public class PostProcessor {
     public Page<PostInfoDTO> getPostsWithStation(PostCommand.GetPostsWithStation userPostComand) {
         return postService.getPosts(userPostComand.page(), userPostComand.station());
     }
+
+    public Page<PostInfoDTO> getUserPostsWithPage(PostCommand.GetUserPosts userPostComand){
+        String token = userPostComand.token();
+        String userEmail = tokenManager.validateToken(token);
+        userService.validateUser(userEmail);
+        return postService.getPostsWithEmail(userPostComand.page(), userEmail);
+    }
 }

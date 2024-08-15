@@ -37,7 +37,11 @@ public class PostRepositoryImpl implements PostRepository {
         return postJPARepository.getPostsWithSubwayId(subwayId, pageable);
     }
 
-
+    @Override
+    public Page<PostInfoDTO> getPostsWithEmail(int page, String email) {
+        Pageable pageable = PageRequest.of(page, 15, Sort.by("createdAt").descending());
+        return postJPARepository.getPostsWithEmail(email, pageable);
+    }
 
 
 }

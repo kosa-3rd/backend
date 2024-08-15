@@ -51,4 +51,12 @@ public class PostMapper{
     public static PostCommand.GetPostsWithStation toGetPostComandWithStation(int page, String station) {
         return new PostCommand.GetPostsWithStation(page, station);
     }
+
+    public static PostCommand.GetUserPosts toUserPostComandWithPage(int page, String token) {
+        return new PostCommand.GetUserPosts(page, token);
+    }
+
+    public static PostCommand.GetUserPosts toGetUserPosts(int page, String token) {
+        return new PostCommand.GetUserPosts(page, token);
+    }
 }
