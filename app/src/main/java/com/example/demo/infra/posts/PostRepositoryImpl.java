@@ -26,6 +26,12 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
+    public Page<PostInfoDTO> getPosts(int page) {
+        Pageable pageable = PageRequest.of(page, 15, Sort.by("createdAt").descending());
+        return postJPARepository.getPosts(pageable);
+    }
+
+    @Override
     public Page<PostInfoDTO> getPosts(int page, String station) {
         Pageable pageable = PageRequest.of(page, 15, Sort.by("createdAt").descending());
         return postJPARepository.getPostsWithStation(station, pageable);

@@ -15,6 +15,10 @@ public interface PostJPARepository extends JpaRepository<Post, Long> {
     Page<Post> findAllByOrderByCreatedAtDesc(Pageable pageable);
 
     @Query("select new com.example.demo.interfaces.controller.post.dto.PostInfoDTO(p.id, p.content, p.station, p.createdAt, p.user.nickname)" +
+            " from Post p ")
+    Page<PostInfoDTO> getPosts(Pageable pageable);
+
+    @Query("select new com.example.demo.interfaces.controller.post.dto.PostInfoDTO(p.id, p.content, p.station, p.createdAt, p.user.nickname)" +
             " from Post p " +
             "where p.station = :station order by p.createdAt desc")
     Page<PostInfoDTO> getPostsWithStation(@Param("station") String station, Pageable pageable);

@@ -17,6 +17,9 @@ public class PostCommand {
     public record DeletePost(String token, String title, Long postId) {
     }
 
+    public record GetPosts(int page) {
+    }
+
     public record GetPostsWithSubwayId(int page, int subwayId) {
     }
 

@@ -44,6 +44,10 @@ public class PostMapper{
         return new PostDto.DeletePostResponse(post.getTitle());
     }
 
+    public static PostCommand.GetPosts toGetPostComand(int page) {
+        return new PostCommand.GetPosts(page);
+    }
+
     public static PostCommand.GetPostsWithSubwayId toGetPostComandWithSubwayId(int page, int subwayId) {
         return new PostCommand.GetPostsWithSubwayId(page, subwayId);
     }

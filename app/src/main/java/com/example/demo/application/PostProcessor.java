@@ -55,6 +55,10 @@ public class PostProcessor {
         return userService.deletePost(userEmail, deletePostCommand);
     }
 
+    public Page<PostInfoDTO> getPosts(PostCommand.GetPosts userPostComand) {
+        return postService.getPosts(userPostComand.page());
+    }
+
     public Page<PostInfoDTO> getPostsWithSubwayId(PostCommand.GetPostsWithSubwayId userPostComand) {
         return postService.getPosts(userPostComand.page(), userPostComand.subwayId());
     }

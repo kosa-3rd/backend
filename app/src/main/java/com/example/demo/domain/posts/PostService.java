@@ -14,6 +14,10 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
+    public Page<PostInfoDTO> getPosts(int page) {
+        return postRepository.getPosts(page);
+    }
+
     public Page<PostInfoDTO> getPosts(int page, int subwayId) {
         return postRepository.getPosts(page, subwayId);
     }
