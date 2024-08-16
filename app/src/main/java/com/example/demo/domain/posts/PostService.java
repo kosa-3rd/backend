@@ -1,6 +1,7 @@
 package com.example.demo.domain.posts;
 
 import com.example.demo.interfaces.controller.post.dto.PostInfoDTO;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
@@ -13,19 +14,22 @@ public class PostService {
     public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
-
+    @Cacheable(value = "posts", key = "#page", unless = "#result == null")
     public Page<PostInfoDTO> getPosts(int page) {
         return postRepository.getPosts(page);
     }
 
+    @Cacheable(value = "posts", key = "#subwayId", unless = "#result == null")
     public Page<PostInfoDTO> getPosts(int page, int subwayId) {
         return postRepository.getPosts(page, subwayId);
     }
 
+    @Cacheable(value = "posts", key = "#station", unless = "#result == null")
     public Page<PostInfoDTO> getPosts(int page, String station) {
         return postRepository.getPosts(page, station);
     }
 
+    @Cacheable(value = "posts", key = "#email", unless = "#result == null")
     public Page<PostInfoDTO> getPostsWithEmail(int page, String email) {
         return postRepository.getPostsWithEmail(page, email);
     }

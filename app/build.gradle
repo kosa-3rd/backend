@@ -33,6 +33,9 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'me.paulschwarz:spring-dotenv:4.0.0'
     runtimeOnly 'com.h2database:h2'
+    //Caching library
+    implementation 'com.github.ben-manes.caffeine:caffeine'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
 
 }
 
