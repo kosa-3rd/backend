@@ -3,6 +3,8 @@ package com.example.demo.domain.users;
 import com.example.demo.domain.posts.Post;
 import com.example.demo.domain.posts.PostCommand;
 import jakarta.persistence.EntityManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -98,6 +100,7 @@ public class UserService {
     }
 
     @Transactional
+    @CacheEvict(value = {"userEmail"}, allEntries = true)
     public Post updatePost(String userEmail, PostCommand.UpdatePost updatePostCommand) {
         return userRepository.getUserByEmail(userEmail).map(
                 user -> {

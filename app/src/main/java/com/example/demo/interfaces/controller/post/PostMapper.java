@@ -16,10 +16,6 @@ public class PostMapper{
         return new PostDto.PostListResponse(posts);
     }
 
-    public static PostCommand.UserPosts toUserPostComand(String token) {
-        return new PostCommand.UserPosts(token);
-    }
-
     public static PostCommand.UpdatePost toUpdatePostCommand(String token, PostDto.UpdatePostRequest request, Long postId) {
         return new PostCommand.UpdatePost(token, request.title(), request.content(),postId);
     }
