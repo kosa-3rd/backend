@@ -100,7 +100,7 @@ public class UserService {
     }
 
     @Transactional
-    @CacheEvict(value = {"userEmail"}, allEntries = true)
+    @CacheEvict(cacheNames = "userCache", key = "#userEmail")
     public Post updatePost(String userEmail, PostCommand.UpdatePost updatePostCommand) {
         return userRepository.getUserByEmail(userEmail).map(
                 user -> {
