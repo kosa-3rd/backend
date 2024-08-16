@@ -1,0 +1,17 @@
+---
+- hosts: webservers
+  become: yes
+  tasks:
+    - name: Update apt cache
+      apt: update_cache=yes
+
+    - name: Install Java
+      apt: name=openjdk-21-jdk state=present
+
+    - name: Copy Spring Boot JAR
+      copy:
+        src: build/libs/your-application-0.0.1-SNAPSHOT.jar
+        dest: /opt/springboot-app.jar
+
+    - name: Start Spring Boot application
+      shell: nohup java -jar /opt/springboot-app.jar &
